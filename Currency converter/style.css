@@ -1,0 +1,131 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    
+}
+body{
+    background-color:#012a4a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 20px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    
+}
+.maincontainer{
+padding: 3px;
+/* border: 2px solid black; */
+    border-radius: 15px;
+    padding: 30px;
+    background-color: #f49e4c;
+    width: 80vh;
+    box-shadow: 5px 5px 15px black;
+
+}
+
+.dropdown{
+    display: flex;
+}
+#headertxt{
+    color: rgb(41, 1, 1);
+}
+
+input{
+
+    padding-left: 9px;
+    margin: 10px;
+    font-size: 20px;box-shadow: 2px 2px 10px black;
+}
+form select button input{
+    width: 100%;
+
+
+    
+}
+.select-container select{
+    padding-left: 5px;
+    font-size: 20px;
+    width: 100%;
+    border: none;
+    background-color: rgb(255, 255, 255) ;
+    border-radius: 15px;
+    outline: none;
+}
+
+.select-container{
+    height: 60px;
+display: flex;
+justify-content: center;
+margin: 5px 0 5px 0;
+background-color: rgb(255, 255, 255) ;
+border: 2px solid black;
+border-radius: 15px;
+margin: 9px 0px 9px 5px;
+border: none;
+}
+
+.amount{
+    font-size: 50px;
+
+
+}
+.amount input {
+    width: 100%;
+    height: 55px;
+    border: none;
+    border-radius: 20px;
+    color: black;
+    font-size: 30px;
+}
+#btn{
+    height: 50px;
+    width: 100%;
+    border: none;
+    box-shadow: 5px 3px 9px black;
+    border-radius: 15px;
+    font-size: 25px;
+    background-color: rgb(121, 12, 84);
+    color: white;
+    margin-top: 15px;
+
+
+}
+#icon{
+
+    display: flex;
+
+    padding: 10px;
+    font-size: 45px;
+    justify-content: center;
+    margin-top: 10px;
+}
+.msg{
+
+    font-size: 30px;
+    margin: 10px 0px 10px 0px;
+    border: 2px solid black;
+    padding: 9px;
+    border-radius: 5px;
+    padding-left: 5px;
+    color: rgb(0, 0, 0);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+    background-color: rgba(255, 255, 255, 0.986);
+    border-radius: 15px;
+    border: none;
+}
+p{
+    font-size: 25px;
+    color: rgb(6, 1, 34);
+    margin-top: 5px;
+    padding: 20px;
+}
+.final{
+    font-size: 30px;
+    color: rgb(102, 5, 5);
+    margin: 20px 0px 20px 0px;
+}
+.red{
+    color: red;
+}

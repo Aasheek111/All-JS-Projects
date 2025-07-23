@@ -1,0 +1,142 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+
+    
+}
+.container{
+
+    width: 100%;
+    min-height: 100vh;
+    
+}
+.todo-app{
+
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    margin :100px auto 20px;
+    max-width: 540px;
+    padding: 30px 40px 70px;
+    border-radius: 30px;
+    min-height: 15rem;
+    box-shadow: 0px 10px 35px black;
+    
+}
+body{
+    background: linear-gradient(140deg,rgb(50, 71, 207),rgb(174, 0, 255));
+}
+
+.todo-app h2{
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.todo-app img{
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.top{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.row{
+
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    background-color:rgb(220, 216, 216);
+    border-radius: 45px;
+}
+
+.row input {
+
+    background-color: rgb(220, 216, 216);
+    height: 2rem;
+    border-radius: 30px;
+    outline: none;
+    border: none;
+    flex: 1;
+    padding: 10px;
+    padding-left: 20px;
+
+}
+
+.row button{
+    height: 3.25rem;
+    outline: none;
+    border: none;
+    border-radius: 45px;
+    background-color: #ff5945;
+    width: 80px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+}
+.list-container{
+
+    margin: 25px 35px 5px;
+
+}
+.list-container li{
+    color: rgb(0, 0, 0);
+    user-select: none;
+    cursor: pointer;
+    list-style: none;
+    position: relative;
+    margin-top: 15px;
+    font-size: 20px;
+    padding-left: 5px;
+
+}
+.span {
+
+    color: rgb(255, 0, 0);
+    position: absolute;
+    right: 0px;
+   
+    padding: 7px;
+}
+span:hover{
+ color: #555;
+  
+}
+.list-container li::before{
+    
+
+    content: '';
+    background-image: url(images/unchecked.png);
+    position: absolute;
+    top: 3px;
+    left: -25px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    
+}
+
+.list-container li.checked {
+
+    color: #555;
+    text-decoration: line-through;
+}
+
+.list-container li.checked::before{
+
+    background-image: url(images/checked.png);
+}
+.cross{
+
+    background:url(images/icon.png);
+    height: 10px;
+    width: 10px;
+}
+

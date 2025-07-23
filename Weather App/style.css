@@ -1,0 +1,99 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+body{
+
+    background:url(clean.jpg);
+    
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    align-items: center;
+
+}
+
+.container{
+
+    border-radius: 20px;
+
+    width: 25rem;
+    border: none;
+    min-height:15rem;
+    text-align: center;
+    padding: 20px;
+    box-shadow: 0px 8px 32px black;
+    background-color: rgb(120, 153, 238);
+    /* backdrop-filter: blur(10px); */
+
+
+}
+
+input{
+
+    width: 90%;
+    padding: 8px;
+    border:none;
+    background-color: rgb(216, 216, 216);
+    margin-top: 10px;
+    /* outline-color: rgb(8, 34, 34); */
+    border-radius: 10px;
+    outline: none;
+}
+
+button{
+    background-color: blueviolet;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100px;
+    font-size: 15px;
+    border-radius: 15px;
+    justify-content: center;
+    
+}
+button:hover{
+    background-color: rgb(102, 30, 170);
+}
+
+.temp{
+    font-size: 60px;
+    margin-top: 30px;
+    color: aliceblue;
+
+}
+.data{
+    color: rgb(255, 255, 255);
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+.icon{
+    height: 200px;
+    width: 200px;
+    margin: 0px auto 10px;
+}
+.upcoming{
+
+    color: white;
+
+}
+.image{
+
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    width: 9rem;
+    padding: 0px;
+
+
+}
+.upcoming{
+    display: flex;
+    margin-top: 20px;
+}

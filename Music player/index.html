@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <header>
+        <img src="icons/playlist.svg"  id="playlist-icon" style="padding: 3px;" alt="">
+        <h2>Feel The Music</h2>
+        <img id="music" src="icons/music.svg" alt="">
+</header>
+
+<div class="main">
+    <div class="left">
+
+        <img src="images/467000.jpg" id="boy" alt="">
+        <div class="volume">
+
+            <img src="icons/volume.svg" id="vol-icon" alt="">
+            <input type="range" min="0" max="1" step="0.01" id="vol-range" >
+        </div>
+    </div>
+
+    
+    <div class="right">
+        <div class="details">
+
+            <div class="song-name">
+                Fly With Me
+            </div>
+            <div class="song-details">
+                Aashik
+            </div>
+        </div>
+        <div class="scroll">
+            <input class="seek" type="range">
+        </div>
+
+        <div class="start">
+            <button id="start">
+                Start Playing
+            </button>
+        </div>
+        <div class="play-pause">
+
+            <div class="duration" style="font-size: 20px;">
+                <span id="front"></span>
+                <span id="back"></span>
+            </div>
+            <img src="icons/previous.svg" id="previous" alt="">
+            <img src="icons/play.svg" id="play" alt="">
+            <img src="icons/next.svg" id="next" alt="">
+        </div>
+
+
+    </div>
+
+    <div class="playlist">
+
+        <div class="playlistsong">1.<img src="images/2002.jpg" alt="">2002</div>
+        <!-- &nbsp; -->
+        <div class="playlistsong">2. <img src="images/husn.jpg" alt="">Husn</div>
+        <div class="playlistsong">3. <img src="images/tu hey kahah.jpg" alt=""> Tu Hey Kahan</div>
+        <div class="playlistsong">4. <img src="images/boy.jpg" alt=""> Comming Soon </div>
+
+    </div>
+</div>
+    <script src="script.js"></script>
+</body>
+</html>

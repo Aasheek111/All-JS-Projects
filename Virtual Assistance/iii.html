@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech Command Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        #recognizedText {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <button id="startRecognition">Start Speech Recognition</button>
+    <p id="recognizedText">Recognized speech will appear here.</p>
+
+    <script>
+        // Initialize the SpeechRecognition API
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'en-US';
+        recognition.interimResults = false; // Set to true if you want interim results
+        recognition.continuous = true; // Keep recognition on until stopped
+
+        recognition.addEventListener('result', (event) => {
+            const transcript = event.results[event.results.length - 1][0].transcript.toLowerCase();
+            document.getElementById('recognizedText').textContent += transcript + ' '; // Append recognized text
+            commands(transcript); // Call the commands function with the transcript
+        });
+
+        recognition.addEventListener('end', recognition.start); // Restart recognition when it ends
+
+        document.getElementById('startRecognition').addEventListener('click', () => {
+            recognition.start();
+        });
+
+        // Function to convert text to speech
+        function speak(text) {
+            const speech = new SpeechSynthesisUtterance(text);
+            window.speechSynthesis.speak(speech);
+        }
+
+        // Commands function to handle different messages
+        function commands(message) {
+            if (message.includes("hello") || message.includes("hey")) {
+                speak("hello aashik bosss");
+            } else if (message.includes("who created")) {
+                speak("My sir aashik created me");
+            } else if (message.includes("open youtube")) {
+                speak("opening youtube");
+                console.log("Attempting to open YouTube");
+                window.open("https://www.youtube.com/"); // Open YouTube
+            } else if (message.includes("open facebook")) {
+                speak("opening facebook");
+                console.log("Attempting to open Facebook");
+                window.open("https://www.facebook.com/"); // Open Facebook
+            } else {
+                console.log("No recognized command.");
+            }
+        }
+    </script>
+</body>
+</html>
