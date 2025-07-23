@@ -14,7 +14,7 @@ let velX = 0;
 let velY=0;
 let score= document.querySelector(".score");
 
-function randomFood() {
+function randomFood() {``
   foodX = Math.floor(Math.random() * 14 + 1);
   foodY = Math.floor(Math.random() * 14 + 1);
   return foodX, foodY;
@@ -73,8 +73,6 @@ function main() {
   html += `<div class="food" style="grid-area:${foodY}/${foodX}"></div>`;
 
   board.innerHTML = html;
-
-
 
   if(snakeX>14||snakeX<0||snakeY>14||snakeY<0){
 
