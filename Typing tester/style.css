@@ -1,0 +1,88 @@
+* {
+  padding: 0%;
+  margin: 0;
+}
+.container {
+  background: linear-gradient(45deg, rgb(218, 217, 217), rgb(6, 92, 138));
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  margin-top: auto;
+  height: 100vh;
+  flex-direction: column;
+}
+#submit {
+  padding: 13px;
+  margin: 10px;
+  outline: none;
+  border: none;
+  background-color: rgb(192, 198, 198);
+  border-radius: 30px;
+  font-size: 20px;
+}
+#inp {
+  height: 40px;
+  padding: 9px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  width: 60rem;
+  outline: none;
+  border-radius: 15px;
+  font-size: 30px;
+  border: none;
+}
+.text {
+  margin: 15px;
+  font-size: x-large;
+}
+.timeandword {
+  font-size: 40px;
+  color: rgb(159, 0, 0);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.selectbtn {
+  width: 80px;
+  height: 60px;
+  font-size: 15px;
+  border-radius: 20px;
+  padding: 5px;
+  margin: 5px;
+  background-color: rgb(44, 130, 151);
+  outline: none;
+  border: none;
+  color: white;
+  transition: all 0.1s ease;
+}
+.selectbtn:hover {
+  transform: scale(1.1);
+  translate: (1);
+  background-color: rgb(23, 159, 193);
+}
+.output{
+    font-size: 30px;
+    margin: 49px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color:rgb(125, 8, 8);
+}
+
+.showwords{
+    font-size: 40px;
+    padding: 10px;
+    margin: 40px;
+}
+.correct{
+    color:green;
+
+}
+.incorrect{
+    color:rgb(149, 0, 0);  
+}
+.current{
+    background-color: rgb(119, 172, 225);
+
+}
