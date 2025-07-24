@@ -531,25 +531,52 @@ let i, j;
 let t = null;
 let select = document.querySelectorAll(".selectbtn");
 let timee = 15;
+let btntype = null;
+input.addEventListener("input", () => {
+  handelinput();
 
-input.addEventListener("input", handelinput);
+  if (input.value.length == 1) {
+    timeshow(15);
+  }
+
+  if (t == "15") {
+    forsec();
+    timeshow(15);
+  } else if (t == "30") {
+    timeshow(30);
+    forsec();
+  } else if (t == "60") {
+    timeshow(60);
+    forsec();
+  } else if (btntype == "20word") {
+    forword(20);
+    showtextlength(20);
+  } else if (btntype == "35word") {
+    forword(35);
+    showtextlength(35);
+  } else if (btntype == "60word") {
+    forword(60);
+    showtextlength(60);
+  }
+});
 
 forsec();
 select.forEach((btn) => {
   let btntype = btn.getAttribute("data-kam");
+  input.disabled = false;
   btn.addEventListener("click", () => {
     if (t != null) {
       clearInterval(t);
     }
     if (btntype == "15sec") {
       forsec();
-      timeshow(15);
+      starttime(15);
     } else if (btntype == "30sec") {
-      timeshow(30);
       forsec();
+      starttime(30);
     } else if (btntype == "60sec") {
-      timeshow(60);
       forsec();
+      starttime(60);
     } else if (btntype == "20word") {
       forword(20);
       showtextlength(20);
@@ -562,15 +589,21 @@ select.forEach((btn) => {
     }
   });
 });
+function temp() {
+  return btntype;
+}
 
 function showtextlength(len) {
   console.log(len);
-  updatetxtlen.innerText =`${len} words`;
-  timerr.innerHTML="";
+  updatetxtlen.innerText = `${len} words`;
+  timerr.innerHTML = "";
 }
 
 let totalwords = 0;
+let gameon = false;
+
 function handelinput() {
+  correctword = 0;
   let i = input.value.trim();
   iarr = i.split(/\s+/);
 
@@ -594,14 +627,24 @@ function handelinput() {
     if (present) {
       present.classList.add("current");
     }
+
+    if (timee <= 0) {
+      gameon = false;
+      clearInterval(t);
+      handelresult();
+      input.disabled = true;
+    }
   });
 
   totalwords = correctword;
 }
 
 function handelresult() {
+  if (!gameon) return;
   let wpm = totalwords;
-  output.innerText = wpm;
+
+  console.log(btntype);
+  output.innerText = `${wpm} WPM`;
 }
 
 function forsec() {
@@ -625,14 +668,17 @@ function forword(word) {
 
 function timeshow(duration) {
   clearInterval(t);
-  updatetxtlen.innerHTML="";
+  gameon = true;
+
+  updatetxtlen.innerHTML = "";
   timee = duration;
   timerr.innerHTML = `${timee} secs`;
-  timee--;
   t = setInterval(() => {
+    timee--;
+
     timerr.innerHTML = `${timee} secs`;
 
-    if (timee < 0) {
+    if (timee <= 0) {
       clearInterval(t);
       t = null;
       handelresult();
