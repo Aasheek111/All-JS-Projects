@@ -6,6 +6,7 @@ let updatetxtlen = document.querySelector(".showtextlength");
 let words = 0;
 let output = document.querySelector(".output");
 let correctword = 0;
+let btntype = null;
 let array = [
   // 1-50 (Most common)
   "the",
@@ -531,52 +532,38 @@ let i, j;
 let t = null;
 let select = document.querySelectorAll(".selectbtn");
 let timee = 15;
-let btntype = null;
+
 input.addEventListener("input", () => {
+  if(input.value.length==1){
+
+    starttime();
+  }
   handelinput();
-
-  if (input.value.length == 1) {
-    timeshow(15);
-  }
-
-  if (t == "15") {
-    forsec();
-    timeshow(15);
-  } else if (t == "30") {
-    timeshow(30);
-    forsec();
-  } else if (t == "60") {
-    timeshow(60);
-    forsec();
-  } else if (btntype == "20word") {
-    forword(20);
-    showtextlength(20);
-  } else if (btntype == "35word") {
-    forword(35);
-    showtextlength(35);
-  } else if (btntype == "60word") {
-    forword(60);
-    showtextlength(60);
-  }
 });
 
 forsec();
 select.forEach((btn) => {
   let btntype = btn.getAttribute("data-kam");
-  input.disabled = false;
   btn.addEventListener("click", () => {
+    input.focus();
     if (t != null) {
       clearInterval(t);
     }
     if (btntype == "15sec") {
       forsec();
-      starttime(15);
+      timee=15
+      justdisplay(15);
+
     } else if (btntype == "30sec") {
       forsec();
-      starttime(30);
+      justdisplay(30);
+      timee=30
+
     } else if (btntype == "60sec") {
       forsec();
-      starttime(60);
+      justdisplay(60);
+      timee=60
+
     } else if (btntype == "20word") {
       forword(20);
       showtextlength(20);
@@ -589,9 +576,6 @@ select.forEach((btn) => {
     }
   });
 });
-function temp() {
-  return btntype;
-}
 
 function showtextlength(len) {
   console.log(len);
@@ -601,6 +585,7 @@ function showtextlength(len) {
 
 let totalwords = 0;
 let gameon = false;
+
 
 function handelinput() {
   correctword = 0;
@@ -637,14 +622,19 @@ function handelinput() {
   });
 
   totalwords = correctword;
-}
+  }
+
 
 function handelresult() {
   if (!gameon) return;
   let wpm = totalwords;
+  output.innerText = `Your WPM is ${wpm}`;
+}
 
-  console.log(btntype);
-  output.innerText = `${wpm} WPM`;
+function justdisplay(ti) {
+  updatetxtlen.innerText = "";
+
+  timerr.innerHTML = `${ti} secs`;
 }
 
 function forsec() {
@@ -669,7 +659,6 @@ function forword(word) {
 function timeshow(duration) {
   clearInterval(t);
   gameon = true;
-
   updatetxtlen.innerHTML = "";
   timee = duration;
   timerr.innerHTML = `${timee} secs`;
@@ -685,6 +674,16 @@ function timeshow(duration) {
     }
   }, 1000);
 }
+
+function starttime(){
+
+  if (timee == "15") {
+    timeshow(15);
+  } else if (timee == "30") {
+    timeshow(30);
+  } else if (timee == "60") {
+    timeshow(60);
+}}
 
 function suffle(arr) {
   let clone = [...arr];
