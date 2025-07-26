@@ -532,11 +532,16 @@ let i, j;
 let t = null;
 let select = document.querySelectorAll(".selectbtn");
 let timee = 15;
+let originaltime=15;
+let istime=true;
+let totalwords = 0;
+
 
 input.addEventListener("input", () => {
-  if(input.value.length==1){
+  if(istime==true&&input.value.length==1){
 
     starttime();
+    istime=false;
   }
   handelinput();
 });
@@ -550,28 +555,40 @@ select.forEach((btn) => {
       clearInterval(t);
     }
     if (btntype == "15sec") {
+      input.disabled=false;
       forsec();
-      timee=15
+      timee=15;
+      originaltime=15;
       justdisplay(15);
+      input.value=''
 
     } else if (btntype == "30sec") {
       forsec();
       justdisplay(30);
       timee=30
+      originaltime=30;
+      input.disabled=false;
+      input.value=''
 
     } else if (btntype == "60sec") {
       forsec();
       justdisplay(60);
       timee=60
+      originaltime=60
+      input.disabled=false;
+      input.value=''
 
     } else if (btntype == "20word") {
+      istime=false;
       forword(20);
       showtextlength(20);
     } else if (btntype == "35word") {
       forword(35);
+      istime=false;
       showtextlength(35);
     } else if (btntype == "60word") {
       forword(60);
+      istime=false;
       showtextlength(60);
     }
   });
@@ -579,11 +596,10 @@ select.forEach((btn) => {
 
 function showtextlength(len) {
   console.log(len);
-  updatetxtlen.innerText = `${len} words`;
+  updatetxtlen.innerText = `${totalwords}/${len} words`;
   timerr.innerHTML = "";
 }
 
-let totalwords = 0;
 let gameon = false;
 
 
@@ -613,7 +629,7 @@ function handelinput() {
       present.classList.add("current");
     }
 
-    if (timee <= 0) {
+    if (timee<= 0) {
       gameon = false;
       clearInterval(t);
       handelresult();
@@ -626,8 +642,9 @@ function handelinput() {
 
 
 function handelresult() {
+
   if (!gameon) return;
-  let wpm = totalwords;
+  let wpm = totalwords*60/originaltime;
   output.innerText = `Your WPM is ${wpm}`;
 }
 
