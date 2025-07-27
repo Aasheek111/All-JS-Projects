@@ -1,12 +1,3 @@
-let input = document.querySelector("#inp");
-input.focus();
-let text = document.querySelector(".showwords");
-let timerr = document.querySelector(".showtimer");
-let updatetxtlen = document.querySelector(".showtextlength");
-let words = 0;
-let output = document.querySelector(".output");
-let correctword = 0;
-let btntype = null;
 let array = [
   // 1-50 (Most common)
   "the",
@@ -528,82 +519,109 @@ let array = [
   "station",
   "stop",
 ];
+let input = document.querySelector("#inp");
+input.focus();
+let text = document.querySelector(".showwords");
+let timerr = document.querySelector(".showtimer");
+let updatetxtlen = document.querySelector(".showtextlength");
+let words = 0;
+let output = document.querySelector(".output");
+let correctword = 0;
+let btntype = null;
 let i, j;
 let t = null;
 let select = document.querySelectorAll(".selectbtn");
 let timee = 15;
-let originaltime=15;
-let istime=true;
+let originaltime = 15;
+let istime = true;
 let totalwords = 0;
-
+let isword = false;
+let startingtime = null;
+let endingtime = null;
+let wordtimerstart = false;
+let dif = null;
 
 input.addEventListener("input", () => {
-  if(istime==true&&input.value.length==1){
-
+  //this to start the timer when user selects the time and tries to input the data
+  if (istime == true && input.value.length == 1) {
     starttime();
-    istime=false;
+    istime = false;
+  }
+  if (isword == true) {
+    showtextlength(words);
   }
   handelinput();
 });
 
-forsec();
+forsec(); //this function randomly shows the 30 words in the screen
+
 select.forEach((btn) => {
-  let btntype = btn.getAttribute("data-kam");
+  //this is to determine the what user has selected and which function should be run
   btn.addEventListener("click", () => {
+    totalwords = 0;
     input.focus();
+    input.disabled = false;
+
+    let btntype = btn.getAttribute("data-kam");
     if (t != null) {
       clearInterval(t);
     }
     if (btntype == "15sec") {
-      input.disabled=false;
       forsec();
-      timee=15;
-      originaltime=15;
+      timee = 15;
+      originaltime = 15;
       justdisplay(15);
-      input.value=''
-
+      input.value = "";
+      istime = true;
+      isword = false;
     } else if (btntype == "30sec") {
       forsec();
       justdisplay(30);
-      timee=30
-      originaltime=30;
-      input.disabled=false;
-      input.value=''
+      timee = 30;
+      originaltime = 30;
 
+      input.value = "";
+      istime = true;
+      isword = false;
     } else if (btntype == "60sec") {
       forsec();
       justdisplay(60);
-      timee=60
-      originaltime=60
-      input.disabled=false;
-      input.value=''
+      timee = 60;
+      originaltime = 60;
 
+      input.value = "";
+      istime = true;
+      isword = false;
     } else if (btntype == "20word") {
-      istime=false;
+      istime = false;
       forword(20);
       showtextlength(20);
+      input.value = "";
+      isword = true;
+      istime = false;
+      words = 20;
     } else if (btntype == "35word") {
       forword(35);
-      istime=false;
+      istime = false;
+      isword = true;
       showtextlength(35);
+      input.value = "";
+      words = 35;
     } else if (btntype == "60word") {
       forword(60);
-      istime=false;
+      istime = false;
+      isword = true;
       showtextlength(60);
+      input.value = "";
+      words = 60;
     }
   });
 });
 
-function showtextlength(len) {
-  console.log(len);
-  updatetxtlen.innerText = `${totalwords}/${len} words`;
-  timerr.innerHTML = "";
-}
-
 let gameon = false;
 
-
 function handelinput() {
+  //this function is to show the green and red effect on the user input and track the user input using highligther
   correctword = 0;
   let i = input.value.trim();
   iarr = i.split(/\s+/);
@@ -615,7 +633,7 @@ function handelinput() {
   });
 
   iarr.forEach((word, index) => {
-    let present = displayedall[index];
+    let present = displayedall[index]; //displayedall is a nodlist and we can acces it using index like array just learned it :)
 
     if (!present) return;
     else if (word == present.innerText.trim()) {
@@ -629,47 +647,59 @@ function handelinput() {
       present.classList.add("current");
     }
 
-    if (timee<= 0) {
-      gameon = false;
+    if (timee <= 0) {
       clearInterval(t);
       handelresult();
       input.disabled = true;
+      gameon = false;
+    }
+    if (!wordtimerstart && isword) {
+      startingtime = Date.now();
+      wordtimerstart = true;
+    }
+
+    if (
+      isword &&
+      iarr.length >= displayedall.length &&
+      iarr[iarr.length - 1] ==
+        displayedall[displayedall.length - 1].innerText.trim()
+    ) {
+      dif = 0;
+      endingtime = Date.now();
+      dif = (endingtime - startingtime) / 1000;
+      input.disabled = true;
+      showwpm();
+    }
+
+    if (istime && iarr.length + 5 >= displayedall.length) {
+      let tempo = suffle(array).slice(0,10);
+      let html = tempo.map((value, index) => {
+        return `<span class="word" data-index=${index}>${value} </span>`;
+      }).join("");
+      
+      text.insertAdjacentHTML('beforeend',html);
+      displayedall=document.querySelectorAll('.word');
     }
   });
 
   totalwords = correctword;
-  }
-
-
-function handelresult() {
-
-  if (!gameon) return;
-  let wpm = totalwords*60/originaltime;
-  output.innerText = `Your WPM is ${wpm}`;
 }
 
 function justdisplay(ti) {
+  //just to display when user selects the time
   updatetxtlen.innerText = "";
-
   timerr.innerHTML = `${ti} secs`;
 }
 
 function forsec() {
+  //it displays the suffled word
   let newarray = suffle(array);
   let ar = newarray.slice(0, 30);
+
   let html = ar.map((e, i) => {
     return `<span class="word" data-index=${i}>${e} </span>`;
   });
 
-  text.innerHTML = html.join(" ");
-}
-
-function forword(word) {
-  let newarr = suffle(array);
-  let ar = newarr.slice(0, word);
-  let html = ar.map((text, i) => {
-    return `<span class='word' data-index=${i}>${text}</span>`;
-  });
   text.innerHTML = html.join(" ");
 }
 
@@ -692,15 +722,15 @@ function timeshow(duration) {
   }, 1000);
 }
 
-function starttime(){
-
+function starttime() {
   if (timee == "15") {
     timeshow(15);
   } else if (timee == "30") {
     timeshow(30);
   } else if (timee == "60") {
     timeshow(60);
-}}
+  }
+}
 
 function suffle(arr) {
   let clone = [...arr];
@@ -713,4 +743,36 @@ function suffle(arr) {
     clone[j] = temp;
   }
   return clone;
+}
+
+function forword(word) {
+  //suffle the words for word and display the desired no of words
+  let newarr = suffle(array);
+  let ar = newarr.slice(0, word);
+  let html = ar.map((text, i) => {
+    return `<span class='word' data-index=${i}>${text}</span>`;
+  });
+  text.innerHTML = html.join(" ");
+}
+
+function showtextlength(len) {
+  //this function just show the text length on the screen when the user selects the word
+
+  updatetxtlen.innerText = `${totalwords}/${len} words`;
+  timerr.innerHTML = "";
+}
+function showwpm() {
+  console.log("Words:", totalwords);
+  console.log("Time (mins):", dif);
+  console.log("WPM:", totalwords / dif);
+  let wpm = ((totalwords + 1) * 60) / dif;
+  output.innerText = `Your WPM is ${Math.round(wpm)}`;
+}
+
+function handelresult() {
+  // this function just display the wpm
+
+  if (!gameon) return;
+  let wpm = (totalwords * 60) / originaltime;
+  output.innerText = `Your WPM is ${Math.round(wpm)}`;
 }

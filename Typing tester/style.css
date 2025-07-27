@@ -10,7 +10,7 @@
   align-items: center;
   margin: auto;
   margin-top: auto;
-  height: 100vh;
+  height: 110vh;
   flex-direction: column;
 }
 #submit {
@@ -46,9 +46,9 @@
 }
 
 .selectbtn {
-  width: 80px;
-  height: 60px;
-  font-size: 15px;
+  width: 90px;
+  height: 70px;
+  font-size: 18px;
   border-radius: 20px;
   padding: 5px;
   margin: 5px;
@@ -57,6 +57,7 @@
   border: none;
   color: white;
   transition: all 0.1s ease;
+  cursor: pointer;
 }
 .selectbtn:hover {
   transform: scale(1.1);
@@ -85,4 +86,22 @@
 .current{
     background-color: rgb(119, 172, 225);
 
+}
+#logo{
+  height: auto;
+  width: 9rem;
+  margin-right: 20rem;
+
+}
+
+
+.new{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+
+}
+.panel{
+  width: 100%;
 }

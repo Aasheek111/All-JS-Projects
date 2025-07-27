@@ -1,63 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="style.css">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Currency Converter</title>
-</head>
-<body>
-    
+  </head>
+  <body>
     <div class="maincontainer">
-        <h1 id="headertxt"> Currency Converter </h1>
+      <h1 id="headertxt">Currency Converter</h1>
+      <p id="showdate"></p>
 
-        <form>
+      <form>
+        <div class="amount">
+          <p>Enter Amount</p>
+          <input type="text" id="inp" placeholder="Enter Amount!" />
+        </div>
 
-            <div class="amount">
-                <p>Enter Amount</p>
-                <input type="text" placeholder="Enter Amount!" >
-            </div>
+        <div class="dropdown">
+          <p>FROM</p>
+          <div class="select-container">
+            <img src="https://flagsapi.com/NP/flat/64.png" />
+            <select name="from" id="from">
+              <option value="NP" selected>NEP</option>
+            </select>
+          </div>
 
-            <div class="dropdown">
-            <p>FROM</p>
-            <div class="select-container">
-                <img src="https://flagsapi.com/FR/flat/64.png">
-                <select name="from" id=" selectt">
-                  <option value="FR" selected>EUR</option>
-                </select>
-            </div>
-        
+          <i class="fa-solid fa-arrows-rotate" id="icon"></i>
 
-            <i class="fa-solid fa-arrows-rotate" id="icon"></i>
+          <p>TO</p>
 
-            <p>TO</p>
+          <div class="select-container">
+            <img src="https://flagsapi.com/AE/flat/64.png" />
+            <select name="to" id="to"></select>
+          </div>
+        </div>
 
-            <div class="select-container">
-                <img src="https://flagsapi.com/AE/flat/64.png">
-                <select name="to" id="">
-                 
-                </select>
-            </div>
-         </div>
+        <div class="final">ANS:</div>
+          <div class="msg" style="display: flex; padding-left: 20px">
+          <div class="fromdisplay"></div>
+          <div class="todisplay"></div>
+        </div>
 
-            <div class="final">
-                ANS:
-            </div>
-            <div class="msg" style="display: flex; padding-left: 20px;">
-
-                <div class="fromdisplay">
-                    1EUR =    
-                </div>
-                <div class="todisplay"> 4.05254284 AED</div>
-            </div>
-
-            <button id="btn">Exchange </button>
-        </form>
-
+        <button id="btn">Exchange</button>
+      </form>
     </div>
     <script src="code.js"></script>
     <script src="script.js"></script>
-   
-</body>
+  </body>
 </html>
