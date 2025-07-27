@@ -545,7 +545,7 @@ input.addEventListener("input", () => {
   //this to start the timer when user selects the time and tries to input the data
   if (istime == true && input.value.length == 1) {
     starttime();
-    istime = false;
+
   }
   if (isword == true) {
     showtextlength(words);
@@ -572,8 +572,9 @@ select.forEach((btn) => {
       originaltime = 15;
       justdisplay(15);
       input.value = "";
-      istime = true;
+      istime = true;    
       isword = false;
+
     } else if (btntype == "30sec") {
       forsec();
       justdisplay(30);
@@ -618,9 +619,12 @@ select.forEach((btn) => {
   });
 });
 
+
 let gameon = false;
 
 function handelinput() {
+  console.log(istime)
+  console.log(isword)
   //this function is to show the green and red effect on the user input and track the user input using highligther
   correctword = 0;
   let i = input.value.trim();
@@ -646,42 +650,45 @@ function handelinput() {
     if (present) {
       present.classList.add("current");
     }
-
-    if (timee <= 0) {
-      clearInterval(t);
-      handelresult();
-      input.disabled = true;
-      gameon = false;
-    }
-    if (!wordtimerstart && isword) {
-      startingtime = Date.now();
-      wordtimerstart = true;
-    }
-
-    if (
-      isword &&
-      iarr.length >= displayedall.length &&
-      iarr[iarr.length - 1] ==
-        displayedall[displayedall.length - 1].innerText.trim()
-    ) {
-      dif = 0;
-      endingtime = Date.now();
-      dif = (endingtime - startingtime) / 1000;
-      input.disabled = true;
-      showwpm();
-    }
-
-    if (istime && iarr.length + 5 >= displayedall.length) {
-      let tempo = suffle(array).slice(0,10);
-      let html = tempo.map((value, index) => {
-        return `<span class="word" data-index=${index}>${value} </span>`;
-      }).join("");
-      
-      text.insertAdjacentHTML('beforeend',html);
-      displayedall=document.querySelectorAll('.word');
-    }
   });
 
+
+
+  if (istime && iarr.length + 5 >= displayedall.length) {
+    console.log("lauda lassan");
+    let tempo = suffle(array).slice(0, 10);
+    let html = tempo
+      .map((value, index) => {
+        return `<span class="word" data-index=${index}>${value} </span>`;
+      })
+      .join("");
+
+    text.insertAdjacentHTML("beforeend", html);
+    displayedall = document.querySelectorAll(".word");
+  }
+  if (timee <= 0) {
+    clearInterval(t);
+    handelresult();
+    input.disabled = true;
+    gameon = false;
+  }
+  if (!wordtimerstart && isword) {
+    startingtime = Date.now();
+    wordtimerstart = true;
+  }
+
+  if (
+    isword &&
+    iarr.length >= displayedall.length &&
+    iarr[iarr.length - 1] ==
+      displayedall[displayedall.length - 1].innerText.trim()
+  ) {
+    dif = 0;
+    endingtime = Date.now();
+    dif = (endingtime - startingtime) / 1000;
+    input.disabled = true;
+    showwpm();
+  }
   totalwords = correctword;
 }
 
