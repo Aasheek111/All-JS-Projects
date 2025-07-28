@@ -1,11 +1,11 @@
-let fromm='usd'
-const BASE_URL =`https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${fromm}.json`;//this is the conversion api link
+let fromm = "usd";
+const BASE_URL = `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${fromm}.json`; //this is the conversion api link
 let amount = document.querySelector("#inp");
 let dropdowns = document.querySelectorAll(".dropdown select");
 let btn = document.querySelector("#btn");
-let showdate=document.querySelector("#showdate");
-let from=document.querySelector('#from');
-let to=document.querySelector("#to")
+let showdate = document.querySelector("#showdate");
+let from = document.querySelector("#from");
+let to = document.querySelector("#to");
 
 // let flagurl=`https://flagsapi.com/NP/flat/64.png`; this is just example of nepal to check the api haha
 let msg = document.querySelector(".msg");
@@ -13,7 +13,7 @@ let fromdis = document.querySelector(".fromdisplay");
 let todis = document.querySelector(".todisplay");
 
 for (let select of dropdowns) {
-//Just Adding all country codes in option
+  //Just Adding all country codes in option
   for (code in countryList) {
     let newElement = document.createElement("option");
     newElement.name = code;
@@ -24,9 +24,9 @@ for (let select of dropdowns) {
   select.addEventListener("change", (evt) => {
     updateFlag(evt.target);
     selectedCurrency = evt.target.value.toLowerCase();
+
+    
     showRate(selectedCurrency);
-
-
   });
 }
 
@@ -37,15 +37,16 @@ function updateFlag(change) {
   newImage.src = `https://flagsapi.com/${countrycode}/flat/64.png`;
 }
 
-async function showRate(countrycode) {
 
-  const BASE_URL =`https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${fromm}.json`;//this is the conversion api link
+//this converts the input into the rates 
+async function showRate(countrycode) {
+  const BASE_URL = `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${fromm}.json`; //this is the conversion api link
 
   console.log(countrycode);
   let response = await fetch(BASE_URL);
   let data = await response.json();
 
-  let cRate = data.eur[countrycode];
+  let cRate = data[from][countrycode];
   console.log(cRate);
 
   fromdis.innerHTML = "1 EUR =";
