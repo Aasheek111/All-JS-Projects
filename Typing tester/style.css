@@ -121,3 +121,13 @@
   transform: scale(1.1);
 
 }
+.high{
+
+  margin-left: 7rem;
+  font-size: 20px;
+  background-color: rgb(178, 215, 215);
+  padding: 9px;
+  border-radius: 5px;
+
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

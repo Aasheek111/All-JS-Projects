@@ -534,7 +534,7 @@ let t = null;
 let select = document.querySelectorAll(".selectbtn");
 let timee = 15;
 let originaltime = 15;
-let temptime=15;
+let temptime = 15;
 let istime = true;
 let totalwords = 0;
 let isword = false;
@@ -545,7 +545,16 @@ let dif = null;
 let istry = false;
 let isenter = false;
 let tryagain = document.querySelector("#tryagain");
-let =false;
+
+let highest15 = parseInt(localStorage.getItem("highest15")) || 0;
+let highest30 = parseInt(localStorage.getItem("highest30")) || 0;
+let highest60 = parseInt(localStorage.getItem("highest60")) || 0;
+let high20 = parseInt(localStorage.getItem("high20")) || 0;
+let high35 = parseInt(localStorage.getItem("high35")) || 0;
+let high60 = parseInt(localStorage.getItem("high60")) || 0;
+let dishigh=document.querySelector('.high')
+
+dishigh.innerHTML=`Highest: ${highest15}`
 
 input.addEventListener("input", () => {
   //this to start the timer when user selects the time and tries to input the data
@@ -556,6 +565,8 @@ input.addEventListener("input", () => {
     showtextlength(words);
   }
   handelinput();
+
+
 });
 
 forsec(); //this function randomly shows the 30 words in the screen
@@ -575,30 +586,33 @@ select.forEach((btn) => {
       forsec();
       timee = 15;
       originaltime = 15;
-      temptime=15;
+      temptime = 15;
       justdisplay(15);
       input.value = "";
       istime = true;
       isword = false;
+      displayhighest(highest15);
     } else if (btntype == "30sec") {
       forsec();
       justdisplay(30);
-      temptime=30;
+      temptime = 30;
       timee = 30;
       originaltime = 30;
       input.value = "";
       istime = true;
       isword = false;
+      displayhighest(highest30);
     } else if (btntype == "60sec") {
       forsec();
       justdisplay(60);
       timee = 60;
       originaltime = 60;
-      temptime=60;
+      temptime = 60;
 
       input.value = "";
       istime = true;
       isword = false;
+      displayhighest(highest60);
     } else if (btntype == "20word") {
       istime = false;
       forword(20);
@@ -608,6 +622,7 @@ select.forEach((btn) => {
       isword = true;
       istime = false;
       words = 20;
+      displayhighest(high20);
     } else if (btntype == "35word") {
       forword(35);
       istime = false;
@@ -615,6 +630,7 @@ select.forEach((btn) => {
       showtextlength(35);
       input.value = "";
       words = 35;
+      displayhighest(high35);
     } else if (btntype == "60word") {
       forword(60);
       istime = false;
@@ -622,6 +638,7 @@ select.forEach((btn) => {
       showtextlength(60);
       input.value = "";
       words = 60;
+      displayhighest(high60);
     }
   });
 });
@@ -772,54 +789,109 @@ function showtextlength(len) {
   updatetxtlen.innerText = `${totalwords}/${len} words`;
   timerr.innerHTML = "";
 }
-function showwpm() {
+function showwpm() {//this is for word
+
   let wpm = ((totalwords + 1) * 60) / dif;
   output.innerText = `Your WPM is ${Math.round(wpm)}`;
+  
+    console.log("HELLo");
+    switch (words) {
+      case 20:
+        if (high20 < wpm) {
+          localStorage.setItem("high20", wpm);
+          displayhighest(wpm);
+        }
+        break;
+
+      case 35:
+        if (high35 < wpm) {
+          localStorage.setItem("high35", wpm);
+          displayhighest(wpm);
+        }
+        break;
+
+      case 60:
+        if (high60 < wpm) {
+          localStorage.setItem("high60", wpm);
+          displayhighest(wpm);
+        }
+        break;
 }
 
 function handelresult() {
+
   // this function just display the wpm
-  tryagain.style.display="block"
+  tryagain.style.display = "block";
+  let wpm = (totalwords * 60) / temptime;
+
+    switch (originaltime) {
+      case 15:
+        if (highest15 < wpm) {
+          localStorage.setItem("highest15", wpm);
+          displayhighest(wpm);
+        }
+
+        break;
+      case 30:
+        if (highest30 < wpm) {
+          localStorage.setItem("highest30", wpm);
+          displayhighest(wpm);
+        }
+        break;
+
+      case 60:
+        if (highest60 < wpm) {
+          localStorage.setItem("highest60", wpm);
+          displayhighest(wpm);
+        }
+        break;
+      default:
+
+    
+  }
+
+
+    
+  }
 
   if (istry) if (!gameon) return;
-  let wpm = (totalwords * 60) / temptime;
   output.innerText = `Your WPM is ${Math.round(wpm)}`;
 }
-window.addEventListener("keydown",(e)=>{
-  if(e.key=="Enter"){
 
-    isenter=true;
-    checkretry()
-  }
-})
-  tryagain.addEventListener("click", () => {
-    istry = true;
+function displayhighest(wp) {
+  dishigh.innerHTML = `Highest: ${wp}`;
+}
+
+window.addEventListener("keydown", (e) => {
+  if (e.key == "Enter") {
+    isenter = true;
     checkretry();
-  
-})
-
-  function checkretry(){
-  
-    totalwords=0;
-    output.innerText = `Your WPM is `;
-    if (istry||isenter) {
-      input.disabled = false;
-      clearInterval(t);
-      input.focus();
-      input.value="";
-
-      if(istime){
-        timee=originaltime;
-        forsec();
-      }
-      if(isword){
-        forword(words);
-
-      }
-      istry=false;
-      isenter=false;
-    }
-
-    tryagain.style.display="none"
-  
   }
+});
+tryagain.addEventListener("click", () => {
+  istry = true;
+  checkretry();
+});
+
+function checkretry() {
+  totalwords = 0;
+  output.innerText = `Your WPM is `;
+  if (istry || isenter) {
+    input.disabled = false;
+    clearInterval(t);
+    input.focus();
+    input.value = "";
+
+    if (istime) {
+      timee = originaltime;
+      forsec();
+    }
+    if (isword) {
+      forword(words);
+    }
+    istry = false;
+    isenter = false;
+  }
+
+  tryagain.style.display = "none";
+}
