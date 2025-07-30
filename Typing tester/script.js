@@ -533,6 +533,7 @@ let t = null;
 let select = document.querySelectorAll(".selectbtn");
 let timee = 15;
 let originaltime = 15;
+let temptime=15;
 let istime = true;
 let totalwords = 0;
 let isword = false;
@@ -540,12 +541,15 @@ let startingtime = null;
 let endingtime = null;
 let wordtimerstart = false;
 let dif = null;
+let istry = false;
+let isenter = false;
+let tryagain = document.querySelector("#tryagain");
+let =false;
 
 input.addEventListener("input", () => {
   //this to start the timer when user selects the time and tries to input the data
   if (istime == true && input.value.length == 1) {
     starttime();
-
   }
   if (isword == true) {
     showtextlength(words);
@@ -570,17 +574,17 @@ select.forEach((btn) => {
       forsec();
       timee = 15;
       originaltime = 15;
+      temptime=15;
       justdisplay(15);
       input.value = "";
-      istime = true;    
+      istime = true;
       isword = false;
-
     } else if (btntype == "30sec") {
       forsec();
       justdisplay(30);
+      temptime=30;
       timee = 30;
       originaltime = 30;
-
       input.value = "";
       istime = true;
       isword = false;
@@ -589,6 +593,7 @@ select.forEach((btn) => {
       justdisplay(60);
       timee = 60;
       originaltime = 60;
+      temptime=60;
 
       input.value = "";
       istime = true;
@@ -619,12 +624,11 @@ select.forEach((btn) => {
   });
 });
 
-
 let gameon = false;
 
 function handelinput() {
-  console.log(istime)
-  console.log(isword)
+  output.innerText = `Your WPM is `;
+
   //this function is to show the green and red effect on the user input and track the user input using highligther
   correctword = 0;
   let i = input.value.trim();
@@ -651,8 +655,6 @@ function handelinput() {
       present.classList.add("current");
     }
   });
-
-
 
   if (istime && iarr.length + 5 >= displayedall.length) {
     console.log("lauda lassan");
@@ -778,8 +780,46 @@ function showwpm() {
 
 function handelresult() {
   // this function just display the wpm
+  tryagain.style.display="block"
 
-  if (!gameon) return;
-  let wpm = (totalwords * 60) / originaltime;
+  if (istry) if (!gameon) return;
+  let wpm = (totalwords * 60) / temptime;
   output.innerText = `Your WPM is ${Math.round(wpm)}`;
 }
+window.addEventListener("keydown",(e)=>{
+  if(e.key=="Enter"){
+
+    isenter=true;
+    checkretry()
+  }
+})
+  tryagain.addEventListener("click", () => {
+    istry = true;
+    checkretry();
+  
+})
+
+  function checkretry(){
+  
+    output.innerText = `Your WPM is `;
+    if (istry||isenter) {
+      input.disabled = false;
+      clearInterval(t);
+      input.focus();
+      input.value="";
+
+      if(istime){
+        timee=originaltime;
+        forsec();
+      }
+      if(isword){
+        forword();
+
+      }
+      istry=false;
+      isenter=false;
+    }
+
+    tryagain.style.display="none"
+  
+  }

@@ -105,3 +105,19 @@
 .panel{
   width: 100%;
 }
+#tryagain{
+  width: 8rem;
+  height: 3rem;
+  background-color: rgba(199, 0, 0, 0.378);
+  color: white;
+  border: none;
+  outline: none;
+  border-radius: 1rem;
+  display: none;
+  transition:all 0.2 ease;
+}
+#tryagain:hover{
+  background-color: rgba(226, 13, 13, 0.619);
+  transform: scale(1.1);
+
+}

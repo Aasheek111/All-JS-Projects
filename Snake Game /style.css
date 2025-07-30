@@ -27,9 +27,11 @@ body{
 }
 .food{
     background-color: rgb(220, 149, 68);
+    border-radius: 10px;
 }
 .snake-head{
     background-color: rgb(206, 55, 100);
+    border-radius: 10px;
 }
 #div0{
     background-color: rgb(102, 173, 201);
@@ -40,6 +42,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+
 }
  button{
     font-size: 20px;
