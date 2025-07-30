@@ -736,6 +736,7 @@ function timeshow(duration) {
   gameon = true;
   updatetxtlen.innerHTML = "";
   timee = duration;
+  
   timerr.innerHTML = `${timee} secs`;
   t = setInterval(() => {
     timee--;
