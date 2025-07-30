@@ -525,6 +525,7 @@ let text = document.querySelector(".showwords");
 let timerr = document.querySelector(".showtimer");
 let updatetxtlen = document.querySelector(".showtextlength");
 let words = 0;
+
 let output = document.querySelector(".output");
 let correctword = 0;
 let btntype = null;
@@ -601,6 +602,7 @@ select.forEach((btn) => {
     } else if (btntype == "20word") {
       istime = false;
       forword(20);
+
       showtextlength(20);
       input.value = "";
       isword = true;
@@ -771,9 +773,6 @@ function showtextlength(len) {
   timerr.innerHTML = "";
 }
 function showwpm() {
-  console.log("Words:", totalwords);
-  console.log("Time (mins):", dif);
-  console.log("WPM:", totalwords / dif);
   let wpm = ((totalwords + 1) * 60) / dif;
   output.innerText = `Your WPM is ${Math.round(wpm)}`;
 }
@@ -801,6 +800,7 @@ window.addEventListener("keydown",(e)=>{
 
   function checkretry(){
   
+    totalwords=0;
     output.innerText = `Your WPM is `;
     if (istry||isenter) {
       input.disabled = false;
@@ -813,7 +813,7 @@ window.addEventListener("keydown",(e)=>{
         forsec();
       }
       if(isword){
-        forword();
+        forword(words);
 
       }
       istry=false;
