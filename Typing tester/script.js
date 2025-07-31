@@ -552,9 +552,9 @@ let highest60 = parseInt(localStorage.getItem("highest60")) || 0;
 let high20 = parseInt(localStorage.getItem("high20")) || 0;
 let high35 = parseInt(localStorage.getItem("high35")) || 0;
 let high60 = parseInt(localStorage.getItem("high60")) || 0;
-let dishigh=document.querySelector('.high')
+let dishigh = document.querySelector(".high");
 
-dishigh.innerHTML=`Highest: ${highest15}`
+dishigh.innerHTML = `Highest: ${highest15}`;
 
 input.addEventListener("input", () => {
   //this to start the timer when user selects the time and tries to input the data
@@ -565,8 +565,6 @@ input.addEventListener("input", () => {
     showtextlength(words);
   }
   handelinput();
-
-
 });
 
 forsec(); //this function randomly shows the 30 words in the screen
@@ -616,7 +614,6 @@ select.forEach((btn) => {
     } else if (btntype == "20word") {
       istime = false;
       forword(20);
-
       showtextlength(20);
       input.value = "";
       isword = true;
@@ -647,6 +644,8 @@ let gameon = false;
 
 function handelinput() {
   output.innerText = `Your WPM is `;
+
+
 
   //this function is to show the green and red effect on the user input and track the user input using highligther
   correctword = 0;
@@ -736,7 +735,7 @@ function timeshow(duration) {
   gameon = true;
   updatetxtlen.innerHTML = "";
   timee = duration;
-  
+
   timerr.innerHTML = `${timee} secs`;
   t = setInterval(() => {
     timee--;
@@ -790,74 +789,77 @@ function showtextlength(len) {
   updatetxtlen.innerText = `${totalwords}/${len} words`;
   timerr.innerHTML = "";
 }
-function showwpm() {//this is for word
+function showwpm() {
+  //this is for word
 
   let wpm = ((totalwords + 1) * 60) / dif;
   output.innerText = `Your WPM is ${Math.round(wpm)}`;
-  
-    console.log("HELLo");
-    switch (words) {
-      case 20:
-        if (high20 < wpm) {
-          localStorage.setItem("high20", wpm);
-          displayhighest(wpm);
-        }
-        break;
 
-      case 35:
-        if (high35 < wpm) {
-          localStorage.setItem("high35", wpm);
-          displayhighest(wpm);
-        }
-        break;
+  console.log("HELLo");
+  switch (words) {
+    case 20:
+      if (high20 < wpm) {
+        high20=Math.round(wpm);
+        localStorage.setItem("high20", high20);
+        displayhighest(high20);
+      }
+      break;
 
-      case 60:
-        if (high60 < wpm) {
-          localStorage.setItem("high60", wpm);
-          displayhighest(wpm);
-        }
-        break;
-}
+    case 35:
+      if (high35 < wpm) {
+        high35=Math.round(wpm);
+        localStorage.setItem("high35", high35);
 
-function handelresult() {
+        displayhighest(high35);
+      }
 
-  // this function just display the wpm
-  tryagain.style.display = "block";
-  let wpm = (totalwords * 60) / temptime;
+      break;
+
+    case 60:
+      if (high60 < wpm) {
+        high60=Math.round(wpm);
+        localStorage.setItem("high60", high60);
+        displayhighest(high60);
+      }
+      break;
+  }}
+
+  function handelresult() {
+    // this function just display the wpm for time
+    tryagain.style.display = "block";
+    let wpm = (totalwords * 60) / temptime;
 
     switch (originaltime) {
       case 15:
         if (highest15 < wpm) {
-          localStorage.setItem("highest15", wpm);
-          displayhighest(wpm);
+          highest15=Math.round(wpm);
+          localStorage.setItem("highest15",highest15);
+          displayhighest(highest15);
         }
 
         break;
       case 30:
         if (highest30 < wpm) {
-          localStorage.setItem("highest30", wpm);
-          displayhighest(wpm);
+          highest30=Math.round(wpm);
+          localStorage.setItem("highest30",highest30);
+          displayhighest(highest30);
         }
         break;
 
       case 60:
         if (highest60 < wpm) {
-          localStorage.setItem("highest60", wpm);
-          displayhighest(wpm);
+          highest60=Math.round(wpm)
+          localStorage.setItem("highest60",highest60);
+          displayhighest(highest60);
         }
         break;
       default:
-
+    }
     
+    if (istry) if (!gameon) return;
+    output.innerText = `Your WPM is ${Math.round(wpm)}`;
   }
 
-
-    
-  }
-
-  if (istry) if (!gameon) return;
-  output.innerText = `Your WPM is ${Math.round(wpm)}`;
-}
 
 function displayhighest(wp) {
   dishigh.innerHTML = `Highest: ${wp}`;
