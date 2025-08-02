@@ -89,8 +89,8 @@
 }
 #logo{
   height: auto;
-  width: 9rem;
-  margin-right: 20rem;
+  width: 8rem;
+  margin-right: 10rem;
 
 }
 
@@ -130,4 +130,17 @@
   border-radius: 5px;
 
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#music{
+  height: 3rem;
+  width: 6rem;
+margin: 2rem;
+background-color: rgb(178, 215, 215);
+
+border: none;
+outline: none;
+border-radius: 9px;
+font-size: 1.2rem;
+
 }

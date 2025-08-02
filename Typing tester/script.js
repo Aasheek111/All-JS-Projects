@@ -553,6 +553,11 @@ let high20 = parseInt(localStorage.getItem("high20")) || 0;
 let high35 = parseInt(localStorage.getItem("high35")) || 0;
 let high60 = parseInt(localStorage.getItem("high60")) || 0;
 let dishigh = document.querySelector(".high");
+let sound1 = document.querySelector("#sound1");
+let sound2 = document.querySelector("#sound2");
+let sound3 = document.querySelector("#sound3");
+let musicselect = document.querySelector("#music");
+let currentmusic = null;
 
 dishigh.innerHTML = `Highest: ${highest15}`;
 
@@ -642,187 +647,214 @@ select.forEach((btn) => {
 
 let gameon = false;
 
-function handelinput() {
-  output.innerText = `Your WPM is `;
+musicselect.addEventListener("change", (e) => {
+  currentmusic = musicselect.value;
+  input.focus();
+});
 
+function playsound() {
+  if (currentmusic == "music1") {
+    sound1.currentTime = 0;
+    sound1.play();
+  } else if (currentmusic == "music2") {
+    sound2.currentTime = 0;
+    sound2.play();
+  } else if (currentmusic == "music3") {
+    sound3.currentTime = 0;
+    sound3.play();
+  }
+}
+  function handelinput() {
+    output.innerText = `Your WPM is `;
 
-
-  //this function is to show the green and red effect on the user input and track the user input using highligther
-  correctword = 0;
-  let i = input.value.trim();
-  iarr = i.split(/\s+/);
-
-  let displayedall = document.querySelectorAll(".word");
-
-  displayedall.forEach((word) => {
-    word.classList.remove("correct", "incorrect", "current");
-  });
-
-  iarr.forEach((word, index) => {
-    let present = displayedall[index]; //displayedall is a nodlist and we can acces it using index like array just learned it :)
-
-    if (!present) return;
-    else if (word == present.innerText.trim()) {
-      present.classList.add("correct");
-      correctword++;
+    playsound();
+    if (currentmusic == "sound1") {
+      playsound(sound1);
+    } else if (currentmusic == "sound2") {
+      playsound(sound2);
+    } else if (currentmusic == "sound3") {
+      playsound(sound3);
     } else {
-      present.classList.add("incorrect");
+      playsound(null);
     }
 
-    if (present) {
-      present.classList.add("current");
+    //this function is to show the green and red effect on the user input and track the user input using highligther
+    correctword = 0;
+    let i = input.value.trim();
+    iarr = i.split(/\s+/);
+
+    let displayedall = document.querySelectorAll(".word");
+
+    displayedall.forEach((word) => {
+      word.classList.remove("correct", "incorrect", "current");
+    });
+
+    iarr.forEach((word, index) => {
+      let present = displayedall[index]; //displayedall is a nodlist and we can acces it using index like array just learned it :)
+
+      if (!present) return;
+      else if (word == present.innerText.trim()) {
+        present.classList.add("correct");
+        correctword++;
+      } else {
+        present.classList.add("incorrect");
+      }
+
+      if (present) {
+        present.classList.add("current");
+      }
+    });
+
+    if (istime && iarr.length + 5 >= displayedall.length) {
+      console.log("lauda lassan");
+      let tempo = suffle(array).slice(0, 10);
+      let html = tempo
+        .map((value, index) => {
+          return `<span class="word" data-index=${index}>${value} </span>`;
+        })
+        .join("");
+
+      text.insertAdjacentHTML("beforeend", html);
+      displayedall = document.querySelectorAll(".word");
     }
-  });
-
-  if (istime && iarr.length + 5 >= displayedall.length) {
-    console.log("lauda lassan");
-    let tempo = suffle(array).slice(0, 10);
-    let html = tempo
-      .map((value, index) => {
-        return `<span class="word" data-index=${index}>${value} </span>`;
-      })
-      .join("");
-
-    text.insertAdjacentHTML("beforeend", html);
-    displayedall = document.querySelectorAll(".word");
-  }
-  if (timee <= 0) {
-    clearInterval(t);
-    handelresult();
-    input.disabled = true;
-    gameon = false;
-  }
-  if (!wordtimerstart && isword) {
-    startingtime = Date.now();
-    wordtimerstart = true;
-  }
-
-  if (
-    isword &&
-    iarr.length >= displayedall.length &&
-    iarr[iarr.length - 1] ==
-      displayedall[displayedall.length - 1].innerText.trim()
-  ) {
-    dif = 0;
-    endingtime = Date.now();
-    dif = (endingtime - startingtime) / 1000;
-    input.disabled = true;
-    showwpm();
-  }
-  totalwords = correctword;
-}
-
-function justdisplay(ti) {
-  //just to display when user selects the time
-  updatetxtlen.innerText = "";
-  timerr.innerHTML = `${ti} secs`;
-}
-
-function forsec() {
-  //it displays the suffled word
-  let newarray = suffle(array);
-  let ar = newarray.slice(0, 30);
-
-  let html = ar.map((e, i) => {
-    return `<span class="word" data-index=${i}>${e} </span>`;
-  });
-
-  text.innerHTML = html.join(" ");
-}
-
-function timeshow(duration) {
-  clearInterval(t);
-  gameon = true;
-  updatetxtlen.innerHTML = "";
-  timee = duration;
-
-  timerr.innerHTML = `${timee} secs`;
-  t = setInterval(() => {
-    timee--;
-
-    timerr.innerHTML = `${timee} secs`;
-
     if (timee <= 0) {
       clearInterval(t);
-      t = null;
       handelresult();
+      input.disabled = true;
+      gameon = false;
     }
-  }, 1000);
-}
+    if (!wordtimerstart && isword) {
+      startingtime = Date.now();
+      wordtimerstart = true;
+    }
 
-function starttime() {
-  if (timee == "15") {
-    timeshow(15);
-  } else if (timee == "30") {
-    timeshow(30);
-  } else if (timee == "60") {
-    timeshow(60);
+    if (
+      isword &&
+      iarr.length >= displayedall.length &&
+      iarr[iarr.length - 1] ==
+        displayedall[displayedall.length - 1].innerText.trim()
+    ) {
+      dif = 0;
+      endingtime = Date.now();
+      dif = (endingtime - startingtime) / 1000;
+      input.disabled = true;
+      showwpm();
+    }
+    totalwords = correctword;
   }
-}
 
-function suffle(arr) {
-  let clone = [...arr];
-
-  for (i = arr.length - 1; i >= 0; i--) {
-    j = Math.floor(Math.random() * i + 1);
-
-    let temp = clone[i];
-    clone[i] = clone[j];
-    clone[j] = temp;
+  function justdisplay(ti) {
+    //just to display when user selects the time
+    updatetxtlen.innerText = "";
+    timerr.innerHTML = `${ti} secs`;
   }
-  return clone;
-}
 
-function forword(word) {
-  //suffle the words for word and display the desired no of words
-  let newarr = suffle(array);
-  let ar = newarr.slice(0, word);
-  let html = ar.map((text, i) => {
-    return `<span class='word' data-index=${i}>${text}</span>`;
-  });
-  text.innerHTML = html.join(" ");
-}
+  function forsec() {
+    //it displays the suffled word
+    let newarray = suffle(array);
+    let ar = newarray.slice(0, 30);
 
-function showtextlength(len) {
-  //this function just show the text length on the screen when the user selects the word
+    let html = ar.map((e, i) => {
+      return `<span class="word" data-index=${i}>${e} </span>`;
+    });
 
-  updatetxtlen.innerText = `${totalwords}/${len} words`;
-  timerr.innerHTML = "";
-}
-function showwpm() {
-  //this is for word
+    text.innerHTML = html.join(" ");
+  }
 
-  let wpm = ((totalwords + 1) * 60) / dif;
-  output.innerText = `Your WPM is ${Math.round(wpm)}`;
+  function timeshow(duration) {
+    clearInterval(t);
+    gameon = true;
+    updatetxtlen.innerHTML = "";
+    timee = duration;
 
-  console.log("HELLo");
-  switch (words) {
-    case 20:
-      if (high20 < wpm) {
-        high20=Math.round(wpm);
-        localStorage.setItem("high20", high20);
-        displayhighest(high20);
+    timerr.innerHTML = `${timee} secs`;
+    t = setInterval(() => {
+      timee--;
+
+      timerr.innerHTML = `${timee} secs`;
+
+      if (timee <= 0) {
+        clearInterval(t);
+        t = null;
+        handelresult();
       }
-      break;
+    }, 1000);
+  }
 
-    case 35:
-      if (high35 < wpm) {
-        high35=Math.round(wpm);
-        localStorage.setItem("high35", high35);
+  function starttime() {
+    if (timee == "15") {
+      timeshow(15);
+    } else if (timee == "30") {
+      timeshow(30);
+    } else if (timee == "60") {
+      timeshow(60);
+    }
+  }
 
-        displayhighest(high35);
-      }
+  function suffle(arr) {
+    let clone = [...arr];
 
-      break;
+    for (i = arr.length - 1; i >= 0; i--) {
+      j = Math.floor(Math.random() * i + 1);
 
-    case 60:
-      if (high60 < wpm) {
-        high60=Math.round(wpm);
-        localStorage.setItem("high60", high60);
-        displayhighest(high60);
-      }
-      break;
-  }}
+      let temp = clone[i];
+      clone[i] = clone[j];
+      clone[j] = temp;
+    }
+    return clone;
+  }
+
+  function forword(word) {
+    //suffle the words for word and display the desired no of words
+    let newarr = suffle(array);
+    let ar = newarr.slice(0, word);
+    let html = ar.map((text, i) => {
+      return `<span class='word' data-index=${i}>${text}</span>`;
+    });
+    text.innerHTML = html.join(" ");
+  }
+
+  function showtextlength(len) {
+    //this function just show the text length on the screen when the user selects the word
+
+    updatetxtlen.innerText = `${totalwords}/${len} words`;
+    timerr.innerHTML = "";
+  }
+  function showwpm() {
+    //this is for word
+
+    let wpm = ((totalwords + 1) * 60) / dif;
+    output.innerText = `Your WPM is ${Math.round(wpm)}`;
+
+    console.log("HELLo");
+    switch (words) {
+      case 20:
+        if (high20 < wpm) {
+          high20 = Math.round(wpm);
+          localStorage.setItem("high20", high20);
+          displayhighest(high20);
+        }
+        break;
+
+      case 35:
+        if (high35 < wpm) {
+          high35 = Math.round(wpm);
+          localStorage.setItem("high35", high35);
+
+          displayhighest(high35);
+        }
+
+        break;
+
+      case 60:
+        if (high60 < wpm) {
+          high60 = Math.round(wpm);
+          localStorage.setItem("high60", high60);
+          displayhighest(high60);
+        }
+        break;
+    }
+  }
 
   function handelresult() {
     // this function just display the wpm for time
@@ -832,69 +864,69 @@ function showwpm() {
     switch (originaltime) {
       case 15:
         if (highest15 < wpm) {
-          highest15=Math.round(wpm);
-          localStorage.setItem("highest15",highest15);
+          highest15 = Math.round(wpm);
+          localStorage.setItem("highest15", highest15);
           displayhighest(highest15);
         }
 
         break;
       case 30:
         if (highest30 < wpm) {
-          highest30=Math.round(wpm);
-          localStorage.setItem("highest30",highest30);
+          highest30 = Math.round(wpm);
+          localStorage.setItem("highest30", highest30);
           displayhighest(highest30);
         }
         break;
 
       case 60:
         if (highest60 < wpm) {
-          highest60=Math.round(wpm)
-          localStorage.setItem("highest60",highest60);
+          highest60 = Math.round(wpm);
+          localStorage.setItem("highest60", highest60);
           displayhighest(highest60);
         }
         break;
       default:
     }
-    
+
     if (istry) if (!gameon) return;
     output.innerText = `Your WPM is ${Math.round(wpm)}`;
   }
 
+  function displayhighest(wp) {
+    dishigh.innerHTML = `Highest: ${wp}`;
+  }
 
-function displayhighest(wp) {
-  dishigh.innerHTML = `Highest: ${wp}`;
-}
-
-window.addEventListener("keydown", (e) => {
-  if (e.key == "Enter") {
-    isenter = true;
+  window.addEventListener("keydown", (e) => {
+    if (e.key == "Enter") {
+      isenter = true;
+      checkretry();
+    }
+  });
+  tryagain.addEventListener("click", () => {
+    istry = true;
     checkretry();
-  }
-});
-tryagain.addEventListener("click", () => {
-  istry = true;
-  checkretry();
-});
+  });
 
-function checkretry() {
-  totalwords = 0;
-  output.innerText = `Your WPM is `;
-  if (istry || isenter) {
-    input.disabled = false;
-    clearInterval(t);
-    input.focus();
-    input.value = "";
+  function checkretry() {
+    totalwords = 0;
+    output.innerText = `Your WPM is `;
+    if (istry || isenter) {
+      input.disabled = false;
+      clearInterval(t);
+      input.focus();
+      input.value = "";
 
-    if (istime) {
-      timee = originaltime;
-      forsec();
+      if (istime) {
+        timee = originaltime;
+        forsec();
+      }
+      if (isword) {
+        forword(words);
+      }
+      istry = false;
+      isenter = false;
     }
-    if (isword) {
-      forword(words);
-    }
-    istry = false;
-    isenter = false;
+
+    tryagain.style.display = "none";
   }
 
-  tryagain.style.display = "none";
-}
