@@ -3,14 +3,12 @@
   margin: 0;
 }
 .container {
-  background: linear-gradient(45deg, rgb(218, 217, 217), rgb(6, 92, 138));
 
+  background: linear-gradient(45deg, rgb(218, 217, 217), rgb(6, 92, 138));
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: auto;
-  margin-top: auto;
-  height: 110vh;
+  height: 100vh;
   flex-direction: column;
 }
 #submit {
