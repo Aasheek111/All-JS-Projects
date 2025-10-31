@@ -8,8 +8,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;
+
 }
 #submit {
   padding: 13px;
@@ -98,6 +101,7 @@
   align-items: center;
   width: 100%;
   padding: 10px;
+  flex-wrap: wrap;
 
 }
 .panel{
@@ -141,4 +145,10 @@ outline: none;
 border-radius: 9px;
 font-size: 1.2rem;
 
+}
+
+/* making some responsive design */
+
+@media screen {
+  
 }
